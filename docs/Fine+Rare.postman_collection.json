@@ -333,6 +333,25 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "POST CSV Processor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/v1/csv-processor",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"csv-processor"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

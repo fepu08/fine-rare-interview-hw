@@ -3,6 +3,7 @@ import connectDB from './config/db';
 import producerRouter from './producer/producer-routes';
 import productRouter from './product/product-routes';
 import { errorHandler, notFound } from './middlewares/errorMiddleware';
+import csvProcessorRoutes from './csv-processor/csv-processor-routes';
 
 const port = process.env.PORT || 3000;
 
@@ -19,6 +20,7 @@ app.get('/', (_req, res) => {
 
 app.use('/api/v1/producers', producerRouter);
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/csv-processor', csvProcessorRoutes);
 
 /* Test Routes */
 app.get('/test-error', (_req, _res, next) => {

@@ -4,17 +4,12 @@ import Producer from './producer-mongoose-schema';
 
 export class ProducerDAO {
   public static async createProducer(producer: ProducerDTO) {
-    const producerExists = await Producer.findOne({
-      name: producer.name,
-      country: producer.country,
-      region: producer.region,
-    });
-
+    const { _id, ...rest } = producer;
+    const producerExists = await Producer.findOne(rest);
     if (producerExists) {
-      throw new ResourceAlreadyExistsError();
+      return producerExists;
     }
 
-    const { _id, ...rest } = producer;
     return await Producer.create(rest);
   }
 

@@ -29,8 +29,9 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=password
       - MONGO_INITDB_DATABASE=fpr
-    volumes:
-      - db:/data/db
+    # Uncomment these lines (and the one at the bottom under volumes) if you want to keep your DB
+    #volumes:
+    # - db:/data/db
 
     networks:
       - application_network
@@ -41,4 +42,4 @@ networks:
 
 volumes:
   notused:
-  db:
+#  db:

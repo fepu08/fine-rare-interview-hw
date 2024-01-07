@@ -8,4 +8,10 @@ export type ProductDTO = {
   producer?: ProducerDTO;
 };
 
+export type ProductIntermediate = {
+  vintage: string;
+  name: string;
+  producer: ProducerDTO;
+};
+
 export type DeleteProductRequestBody = { productIds: string[] };
