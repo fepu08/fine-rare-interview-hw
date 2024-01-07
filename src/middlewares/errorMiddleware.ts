@@ -16,15 +16,16 @@ export const errorHandler = (
   let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   let message = err.message;
 
-  if (
-    err.name === 'ResourceNotFoundError' ||
-    (err.name === 'CastError' && (err as CastError).kind === 'ObjectId')
-  ) {
+  if (err.name === 'CastError' && (err as CastError).kind === 'ObjectId') {
     message = 'Resource Not Found';
     statusCode = 404;
-  }
-
-  if (err.name === 'ResourceAlreadyExistsError') {
+  } else if (err.name === 'ValidationError') {
+    message = err.message;
+    statusCode = 400;
+  } else if (err.name === 'ResourceNotFoundError') {
+    message = err.message;
+    statusCode = 404;
+  } else if (err.name === 'ResourceAlreadyExistsError') {
     message = err.message;
     statusCode = 409;
   }
