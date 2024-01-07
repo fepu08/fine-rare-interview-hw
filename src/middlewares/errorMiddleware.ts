@@ -24,6 +24,10 @@ export const errorHandler = (
     statusCode = 404;
   }
 
+  if (err.name === 'ResourceAlreadyExistsError') {
+    message = err.message;
+    statusCode = 409;
+  }
   res.status(statusCode).json({
     message,
     stack: process.env.NODE_ENV === 'production' ? '🤖' : err.stack,
