@@ -54,7 +54,7 @@ export default class ProducerController {
       throw new ResourceNotFoundError();
     }
 
-    res.status(201).send(response);
+    res.status(200).send(response);
   });
 
   /**
