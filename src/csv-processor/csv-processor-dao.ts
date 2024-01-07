@@ -21,6 +21,7 @@ export class CSVProcessorDAO {
         { $set: productData },
         { upsert: true },
       );
+      console.log(`updated: ${JSON.stringify(productData)}`);
     }
   };
 }

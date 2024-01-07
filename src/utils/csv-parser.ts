@@ -37,17 +37,14 @@ export function processCSVAndUpsert(
           },
           {} as CSVRecord,
         );
-
         batch.push(record);
 
         if (batch.length >= config.batchSize) {
           fileStream.pause();
-          callback(convertCSVRecordsToProductIntermediate(batch))
-            .then(() => {
-              batch = [];
-              fileStream.resume();
-            })
-            .catch(console.error);
+
+          callback(convertCSVRecordsToProductIntermediate(batch)).catch(
+            console.error,
+          );
           batch = [];
           fileStream.resume();
         }
@@ -57,14 +54,11 @@ export function processCSVAndUpsert(
 
   fileStream.on('end', () => {
     if (batch.length > 0) {
-      callback(convertCSVRecordsToProductIntermediate(batch))
-        .then(() => {
-          console.log('CSV processing completed.');
-        })
-        .catch((error) => {
-          console.error('Error in CSV processing:', error);
-        });
+      callback(convertCSVRecordsToProductIntermediate(batch)).catch(
+        console.error,
+      );
     }
+    console.log('CSV reading finished');
   });
 
   fileStream.on('error', (error) => {
