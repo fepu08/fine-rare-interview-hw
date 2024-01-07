@@ -1,14 +1,9 @@
 import mongoose, { Model, ObjectId } from 'mongoose';
-import {
-  ProducerDocument,
-  ProducerSchema,
-} from '../producer/producer-mongoose-schema';
 
 export interface ProductDocument extends Document {
   vintage: string;
   name: string;
   producerId: ObjectId;
-  producer: ProducerDocument;
 }
 
 interface ProductModel extends Model<ProductDocument> {}
@@ -23,11 +18,28 @@ const ProductSchema = new mongoose.Schema({
   },
   producerId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'Producer',
     required: true,
   },
-  producer: {
-    type: ProducerSchema,
-    required: true,
+});
+
+ProductSchema.virtual('producer', {
+  ref: 'Producer',
+  localField: 'producerId',
+  foreignField: '_id',
+  justOne: true,
+});
+
+ProductSchema.set('toJSON', {
+  virtuals: true,
+  transform: function (_doc, ret) {
+    delete ret.id;
+  },
+});
+ProductSchema.set('toObject', {
+  virtuals: true,
+  transform: function (_doc, ret) {
+    delete ret.id;
   },
 });
 
