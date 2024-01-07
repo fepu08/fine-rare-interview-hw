@@ -1,6 +1,7 @@
 import express from 'express';
 import connectDB from './config/db';
 import producerRouter from './producer/producer-routes';
+import productRouter from './product/product-routes';
 import { errorHandler, notFound } from './middlewares/errorMiddleware';
 
 const port = process.env.PORT || 3000;
@@ -17,7 +18,7 @@ app.get('/', (_req, res) => {
 });
 
 app.use('/api/v1/producers', producerRouter);
-app.use('/api/v1/producers', producerRouter);
+app.use('/api/v1/products', productRouter);
 
 /* Test Routes */
 app.get('/test-error', (_req, _res, next) => {
