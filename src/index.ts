@@ -1,14 +1,24 @@
 import express from 'express';
 import connectDB from './config/db';
+import { errorHandler, notFound } from './middlewares/errorMiddleware';
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 connectDB().catch(console.error);
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('API is running...');
 });
+
+app.get('/error', (req, res) => {
+  throw new Error('test');
+});
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
