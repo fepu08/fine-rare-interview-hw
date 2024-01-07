@@ -49,6 +49,10 @@ You can customize various settings in the `docker-compose.yml` file:
       - MONGO_CONNECTION_URI=mongodb://newusername:newpassword@db:27017/newdbname
     ```
 
+# API Documentation
+
+In `./docs` folder you can find API related documentations and Postman collection
+
 ## Info
 
 Docker should detect file changes, so you don't need to stop and start every time you make change although if you want to add package you first need to stop then start containers again.
