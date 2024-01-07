@@ -1,0 +1,44 @@
+services:
+  backend-service:
+    build:
+      context: .
+      target: dev
+    command: npm run dev
+    ports:
+      - '3000:3000'
+      - '9229:9229'
+      - '9230:9230'
+    user: node
+    volumes:
+      - .:/opt/node_app/app
+      - notused:/opt/node_app/app/node_modules
+    environment:
+      - MONGO_CONNECTION_URI=mongodb://root:password@db:27017/?retryWrites=true&w=majority
+      - MONGO_DATABASE_NAME=fpr
+    depends_on:
+      - db
+    networks:
+      - application_network
+
+  db:
+    image: 'mongo:4'
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=fpr
+    volumes:
+      - db:/data/db
+
+    networks:
+      - application_network
+
+networks:
+  application_network:
+    driver: bridge
+
+volumes:
+  notused:
+  db:
