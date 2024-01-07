@@ -35,7 +35,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/producers/659a74935914426a1691a8b7",
+							"raw": "{{base_url}}/api/v1/producers/659a74475914426a1691a8b4",
 							"host": [
 								"{{base_url}}"
 							],
@@ -43,7 +43,7 @@
 								"api",
 								"v1",
 								"producers",
-								"659a74935914426a1691a8b7"
+								"659a74475914426a1691a8b4"
 							]
 						}
 					},
@@ -55,7 +55,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/producers/659aa631b4740e4b68fd23a4",
+							"raw": "{{base_url}}/api/v1/producers/659a74475914426a1691a8b4",
 							"host": [
 								"{{base_url}}"
 							],
@@ -63,7 +63,7 @@
 								"api",
 								"v1",
 								"producers",
-								"659aa631b4740e4b68fd23a4"
+								"659a74475914426a1691a8b4"
 							]
 						}
 					},
@@ -229,7 +229,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/products?producerId=659a74475914426a1691a8b4",
+							"raw": "{{base_url}}/api/v1/products?producerId=659a74935914426a1691a8b7",
 							"host": [
 								"{{base_url}}"
 							],
@@ -241,7 +241,7 @@
 							"query": [
 								{
 									"key": "producerId",
-									"value": "659a74475914426a1691a8b4"
+									"value": "659a74935914426a1691a8b7"
 								}
 							]
 						}
@@ -249,7 +249,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Product by its ID Copy",
+					"name": "POST Create Multiple Products",
 					"request": {
 						"method": "POST",
 						"header": [],

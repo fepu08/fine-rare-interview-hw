@@ -19,7 +19,10 @@ export const errorHandler = (
   if (err.name === 'CastError' && (err as CastError).kind === 'ObjectId') {
     message = 'Resource Not Found';
     statusCode = 404;
-  } else if (err.name === 'ValidationError') {
+  } else if (
+    err.name === 'ValidationError' ||
+    err.name === 'InvalidRequestDataError'
+  ) {
     message = err.message;
     statusCode = 400;
   } else if (err.name === 'ResourceNotFoundError') {

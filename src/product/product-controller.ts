@@ -12,12 +12,19 @@ export default class ProductController {
    * @access 	Public
    */
   static createProducts = asyncHandler(async (req: Request, res: Response) => {
+    const products = (req.body as ProductDTO[]).filter((product) => {
+      if (product.name || product.producerId || product.vintage) {
+        return product;
+      }
+    });
+    if (!products || products.length === 0) {
+      throw new InvalidRequestDataError();
+    }
+
     const response = await ProductDAO.createProducts(req.body as ProductDTO[]);
     if (!response) {
       throw new ResourceNotFoundError();
     }
-
-    console.log(response);
 
     res.status(201).send(response);
   });
@@ -75,6 +82,10 @@ export default class ProductController {
    * @access 	Public
    */
   static deleteProducts = asyncHandler(async (req: Request, res: Response) => {
+    const productIds = (req.body as DeleteProductRequestBody).productIds;
+    if (!productIds) {
+      throw new InvalidRequestDataError();
+    }
     const response = await ProductDAO.deleteProducts(
       (req.body as DeleteProductRequestBody).productIds,
     );
