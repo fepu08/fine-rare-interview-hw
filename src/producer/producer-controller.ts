@@ -36,11 +36,11 @@ export default class ProducerController {
    * @access 	Public
    */
   static getProducerById = asyncHandler(async (req: Request, res: Response) => {
-    const data = await ProducerDAO.getProducerById(req.params.id);
-    if (!data) {
+    const response = await ProducerDAO.getProducerById(req.params.id);
+    if (!response) {
       throw new ResourceNotFoundError();
     }
-    res.status(200).json(data);
+    res.status(200).json(response);
   });
 
   /**
@@ -49,12 +49,12 @@ export default class ProducerController {
    * @access 	Public
    */
   static updateProducer = asyncHandler(async (req: Request, res: Response) => {
-    const data = await ProducerDAO.updateProducer(req.body as ProducerDTO);
-    if (!data) {
+    const response = await ProducerDAO.updateProducer(req.body as ProducerDTO);
+    if (!response) {
       throw new ResourceNotFoundError();
     }
 
-    res.status(201).send(data);
+    res.status(201).send(response);
   });
 
   /**
