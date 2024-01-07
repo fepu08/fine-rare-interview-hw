@@ -21,6 +21,11 @@ const ProductSchema = new mongoose.Schema({
     ref: 'Producer',
     required: true,
   },
+  uniqueIdentifier: {
+    type: String,
+    unique: true,
+    required: true,
+  },
 });
 
 ProductSchema.virtual('producer', {
