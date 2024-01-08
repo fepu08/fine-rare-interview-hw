@@ -1,10 +1,19 @@
 import ResourceNotFoundError from '../errors/resource-not-found-error';
+import { getUniqueIdentifierFrom } from '../utils';
 import { ProductDTO } from './product-dto';
 import Product from './product-mongoose-schema';
 
 export class ProductDAO {
   public static async createProducts(products: ProductDTO[]) {
-    return await Product.create(products);
+    const productsWithUniqueIdentifier = products.map((item) => ({
+      ...item,
+      uniqueIdentifier: getUniqueIdentifierFrom(
+        item.vintage,
+        item.name,
+        item.producerId,
+      ),
+    }));
+    return await Product.create(productsWithUniqueIdentifier);
   }
 
   public static async getProductById(id: string) {
@@ -21,9 +30,20 @@ export class ProductDAO {
 
   public static async updateProduct(product: ProductDTO) {
     const { _id, ...rest } = product;
-    return await Product.findByIdAndUpdate(_id, rest, {
-      new: true,
-    }).populate('producer');
+    return await Product.findByIdAndUpdate(
+      _id,
+      {
+        ...rest,
+        uniqueIdentifier: getUniqueIdentifierFrom(
+          rest.vintage,
+          rest.name,
+          rest.producerId,
+        ),
+      },
+      {
+        new: true,
+      },
+    ).populate('producer');
   }
 
   public static async deleteProducts(ids: string[]) {

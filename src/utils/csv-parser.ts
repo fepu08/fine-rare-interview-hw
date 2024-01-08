@@ -27,7 +27,7 @@ export function processCSVAndUpsert(
       data = data.slice(lineEndIndex + 1);
 
       if (!headers) {
-        headers = line.split(',');
+        headers = line.split(',').map((item) => item.replace(/\s/g, ''));
       } else {
         const row = line.split(',');
         const record: CSVRecord = headers.reduce(
@@ -72,7 +72,7 @@ function convertCSVRecordsToProductIntermediate(
   return batch.map((item) => {
     return {
       vintage: item.Vintage,
-      name: item.Name,
+      name: item.ProductName,
       producer: {
         name: item.Producer,
         country: item.Country,
