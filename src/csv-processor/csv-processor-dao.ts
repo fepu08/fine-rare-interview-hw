@@ -1,15 +1,12 @@
 import { ProducerDAO } from '../producer/producer-dao';
 import { ProductIntermediate } from '../product/product-dto';
 import Product from '../product/product-mongoose-schema';
+import { getUniqueIdentifierFrom } from '../utils';
 
 export class CSVProcessorDAO {
   public static upsertBatch = async (batch: ProductIntermediate[]) => {
     for (const item of batch) {
       const producer = await ProducerDAO.createProducer(item.producer);
-
-      const uniqueIdentifier = `${item.vintage}+${
-        item.name
-      }+${producer._id.toString()}`;
 
       const productData = {
         ...item,
@@ -17,7 +14,13 @@ export class CSVProcessorDAO {
       };
 
       await Product.updateOne(
-        { uniqueIdentifier: uniqueIdentifier },
+        {
+          uniqueIdentifier: getUniqueIdentifierFrom(
+            item.vintage,
+            item.name,
+            producer._id.toString(),
+          ),
+        },
         { $set: productData },
         { upsert: true },
       );
