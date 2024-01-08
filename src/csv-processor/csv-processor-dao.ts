@@ -7,9 +7,9 @@ export class CSVProcessorDAO {
     for (const item of batch) {
       const producer = await ProducerDAO.createProducer(item.producer);
 
-      const uniqueIdentifier = `${item.vintage}-${
+      const uniqueIdentifier = `${item.vintage}+${
         item.name
-      }-${producer._id.toString()}`;
+      }+${producer._id.toString()}`;
 
       const productData = {
         ...item,
