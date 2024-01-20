@@ -1,0 +1,174 @@
+openapi: 3.0.0
+info:
+  title: Product API
+  version: 1.0.0
+  description: API for managing products and producers using MongoDB.
+paths:
+  /api/v1/products:
+    post:
+      summary: Create multiple products
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateProductRequestBody'
+      responses:
+        '201':
+          description: Products created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateProductResponseBody'
+        '400':
+          description: Invalid request data
+    get:
+      summary: Get products by producer ID
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: producerId
+          schema:
+            type: string
+          required: true
+          description: Unique ID of the producer
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+        '404':
+          description: Resource not found
+
+    put:
+      summary: Update a product
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDTO'
+      responses:
+        '201':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '404':
+          description: Resource not found
+
+    delete:
+      summary: Delete multiple products
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteProductRequestBody'
+      responses:
+        '202':
+          description: Products deleted successfully
+        '400':
+          description: Invalid request data, in case of user doesn't provide the request body.
+        '404':
+          description: Resource not found
+  /api/v1/products/{id}:
+    get:
+      summary: Get a product by its ID
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Unique ID of the product
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '404':
+          description: Resource not found
+components:
+  schemas:
+    ProductDTO:
+      type: object
+      required:
+        - _id
+        - vintage
+        - name
+        - producerId
+      properties:
+        _id:
+          type: string
+        vintage:
+          type: string
+        name:
+          type: string
+        producerId:
+          type: string
+        producer:
+          $ref: '#/components/schemas/ProducerDTO'
+    CreateProductRequestBody:
+      type: object
+      required:
+        - vintage
+        - name
+        - producerId
+      properties:
+        vintage:
+          type: string
+        name:
+          type: string
+        producerId:
+          type: string
+    CreateProductResponseBody:
+      type: object
+      properties:
+        _id:
+          type: string
+        vintage:
+          type: string
+        name:
+          type: string
+        producerId:
+          type: string
+    ProducerDTO:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        region:
+          type: string
+    DeleteProductRequestBody:
+      type: object
+      properties:
+        productIds:
+          type: array
+          items:
+            type: string
+          description: Array of product IDs to delete

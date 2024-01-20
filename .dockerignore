@@ -1,0 +1,8 @@
+.git
+dist
+*Dockerfile*
+*docker-compose*
+node_modules
+test-reports
+.husky
+docs

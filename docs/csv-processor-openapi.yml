@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: CSV Processor API
+  version: 1.0.0
+  description: API for process CSV
+paths:
+  /api/v1/csv-processor:
+    post:
+      summary: Upsert Products and create Producers
+      tags:
+        - CSV Processor
+      responses:
+        '202':
+          description: Accepted CSV file for batch processing

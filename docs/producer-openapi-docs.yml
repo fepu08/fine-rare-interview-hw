@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: Producer API
+  version: 1.0.0
+  description: API for managing Producers
+
+paths:
+  /api/v1/producers:
+    post:
+      summary: Creates a new Producer
+      tags:
+        - Producers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProducerWithoutId'
+      responses:
+        '201':
+          description: Producer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producer'
+        '400':
+          description: Invalid input
+
+    get:
+      summary: Get all Producers
+      tags:
+        - Producers
+      responses:
+        '200':
+          description: A list of Producers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Producer'
+
+  /api/v1/producers/{id}:
+    get:
+      summary: Get a Producer by ID
+      tags:
+        - Producers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producer data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producer'
+        '404':
+          description: Resource not fund
+
+    put:
+      summary: Update a Producer
+      tags:
+        - Producers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Producer'
+      responses:
+        '200':
+          description: Producer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producer'
+        '404':
+          description: Resource not found
+
+    delete:
+      summary: Delete a Producer by ID
+      tags:
+        - Producers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Producer deleted successfully
+        '404':
+          description: Resource not found
+
+components:
+  schemas:
+    Producer:
+      type: object
+      required:
+        - name
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        region:
+          type: string
+    ProducerWithoutId:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        country:
+          type: string
+        region:
+          type: string
